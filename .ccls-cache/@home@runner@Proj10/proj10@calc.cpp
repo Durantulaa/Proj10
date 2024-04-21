@@ -71,7 +71,7 @@ for (int i = 0; i < len; i++){
     }
     valueTbl[valueIdx] = num;
     valueIdx++;
-    
+    i = lastIndex;
   }
   }
 }
