@@ -1,99 +1,99 @@
 /*
-Name: Steph Borla, 
+Name: Fady Youssef
 Class: CPSC 122, Section 1
-Date Submitted: February 25, 2021
-Assignment: N/A 
-Description: Part 1 of Calculator Assignment 
+Date Submitted: April 23, 2024
+Description: Part 1 of Calculator Assignment
 To Compile: make
 To Execute: ./calc "(121+12)"
 */
 
 #include "calc.h"
+#include <cstddef>
 #include <cstring>
 #include <iostream>
+#include <fstream>
+
 
 using namespace std;
 
-// Write functions in this order.  Constructor and destructor will be built as
-// the functions it invokes are written
-
-Calc::Calc(char *argvIn) {
+Calc::Calc(const char *argvIn) {
   stk = new Stack();
   valueTbl = new int[26];
   valueIdx = 0;
   int len = strlen(argvIn);
-  inFix = new char[len];
+  inFix = new char[len + 1]; // Add 1 for the null terminator
+  strcpy(inFix, argvIn);
 }
 
 Calc::~Calc() {
   delete[] inFix;
   delete[] valueTbl;
   delete stk;
-}
+} // done
 
 bool Calc::CheckTokens() {
   for (int i = 0; inFix[i] != '\0'; i++) {
-    if (inFix[i] == '+' || inFix[i] == '-' || inFix[i] == '*' ||
-        inFix[i] == '(' || inFix[i] == ')' ||
-        ((isalpha(inFix[i]) && isupper(inFix[i]))) || isdigit(inFix[i]))
-      return true;
+    if (!(inFix[i] == '+' || inFix[i] == '-' || inFix[i] == '*' ||
+          inFix[i] == '(' || inFix[i] == ')' ||
+          ((isalpha(inFix[i]) && isupper(inFix[i]))) || isdigit(inFix[i]))) {
+      cout << "Invalid Input\n";
+      return false;
+    }
   }
-
-  cout << "Invalid Input\n";
-  return false;
-}
+  return true;
+} // done
 
 void Calc::MakeValueTbl() {
-for(int i =0; i < 26; i++)
-  valueTbl[i] = 0; 
+  for (int i = 0; i < 26; i++)
+    valueTbl[i] = 0;
 }
 
-int FindLast(int cur){
+int Calc::FindLast(int cur) {
   int last = cur;
-  while(isdigit())
-  {
-    
+  while (isdigit(inFix[last++])) {
+    if (!isdigit(inFix[last]))
+      return last;
   }
+  return last; // return last digit
 }
-
+// parse the infix expression
 void Calc::Parse() {
-
-MakeValueTbl();
+  MakeValueTbl(); // initialize value table
   int len = strlen(inFix);
-for (int i = 0; i < len; i++){
-  if (isalpha(inFix[i])){
-    //find the last digit in the current digit string 
-    int lastIndex = FindLast(i);
-    //convert the digit string to an int
-    int num = 0;
-    for (int j = i; j <= lastIndex; j++){
-      num = num * 10 + (inFix[j] - '0');
+  int i = 0; // initialize loop index
+  while (i < len) {
+    if (isalpha(inFix[i])) {
+      // find the last index of the variable
+      int lastIndex = FindLast(i);
+      // convert variable to index in value table
+      int varIndex = inFix[i] - 'A';
+      // if variable hasn't been assigned a value, set it to zero
+      if (valueTbl[varIndex] == 0) {
+        valueTbl[varIndex] = 0;
+      }
+      // move to the next character after the variable
+      i = lastIndex;
+    } else {
+      // move to the next character
+      i++;
     }
-    valueTbl[valueIdx] = num;
-    valueIdx++;
-    i = lastIndex;
   }
-  }
-}
-  
 }
 
 bool Calc::CheckParens() {
-  int ct;
-
+  int ct = 0;
   for (int i = 0; inFix[i] != '\0'; i++) {
     if (inFix[i] == '(')
-      ct++;
+      ct++; // on left
     else if (inFix[i] == ')')
-      ct--;
-    return true;
+      ct--; // on right
   }
 
-  if (ct != 0) {
-    cout << "invalid input\n";
+  if (ct != 0) { // if ct is unbalanced
+    cout << "Unbalanced parens\n";
     return false;
   }
-  return ct;
+  return true;
 }
 
 void Calc::DisplayInFix() { cout << "InFix: " << inFix << endl; }

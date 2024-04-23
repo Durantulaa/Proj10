@@ -17,3 +17,4 @@ list1.o: list.cpp
 
 clean :
 	rm *.o
+
