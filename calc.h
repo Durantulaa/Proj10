@@ -1,6 +1,6 @@
 
 /*
-Name: Paul De Palma
+Name: 
 Class: CPSC 122, Section 1
 Date Submitted: February 25, 2021
 Assignment: N/A
