@@ -1,5 +1,5 @@
- /*
-Name: 
+/*
+Name:
 Class: CPSC 122, Section 1
 Date Submitted: April 23, 2024
 Description: Part 1 of Calculator Assignment
@@ -46,18 +46,16 @@ void Calc::MakeValueTbl() {
     valueTbl[i] = 0;
 }
 
-/*
-pre: expression is a fully parenthsized arithmetic expression represented as
-C-String post: returns a struct containing a pointer to an array holding the
-integers plus the length of the array
-*/
 int Calc::FindLast(int cur) {
   int last = cur;
-  while (isdigit(inFix[last++])) {
-    if (!isdigit(inFix[last]))
-      return last;
+  // while (isdigit(inFix[last++])) {
+  //   if (!isdigit(inFix[last]))
+  //     return last;
+  // }
+  while (isdigit(inFix[last])) {
+    last++;
   }
-  return last; // return last digit
+  return last - 1; // return last digit
 }
 
 void Calc::Parse() {
@@ -100,5 +98,6 @@ bool Calc::CheckParens() {
 }
 
 void Calc::DisplayInFix() { cout << "InFix: " << inFix << endl; }
+
 // make
 // ./calc

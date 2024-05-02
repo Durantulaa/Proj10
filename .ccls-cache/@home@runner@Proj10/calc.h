@@ -132,6 +132,7 @@ public:
   */
   bool CheckParens();
 
+private:
   char *inFix;   // null-terminated string that holds infix expression
   int *valueTbl; // pointer to an array holding variable and expression values
   int valueIdx;  // index of the next available position in valueTbl

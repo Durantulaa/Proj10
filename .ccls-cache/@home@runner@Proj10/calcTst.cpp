@@ -2,42 +2,32 @@
 #include <iostream>
 
 using namespace std;
+int main(int argc, char *argv[]) {
 
-int main(){//int argc, char *argv[]) {
-  //Calc *C = new Calc(argv[1]);
+  if (argc != 2) {
+    cout << "Invalid input. Please try again." << endl;
+    return 1;
+  }
+
+  Calc *C = new Calc(argv[1]);
 
   // Test CheckTokens with valid input
-  Calc calculator1("((A+B)*(C-D))");
-  Calc calculator2("(A-B)*C");
-  Calc calculator3("((B*A)-G)");
-  Calc calculator4("((V-R)+A)");
-  Calc calculator5("(B-A)*(B*T)");
-  Calc calculator6("121+12");
+  // Calc calculator1(argv[1]);
 
-  if (!calculator1.CheckTokens()) {
+  if (!C->CheckTokens()) {
     cout << "CheckTokens test failed\n";
   } else {
     cout << "CheckTokens test passed\n";
   }
 
-  if (!calculator1.CheckParens()) {
+  if (!C->CheckParens()) {
     cout << "CheckParens test failed\n";
   } else {
     cout << "CheckParens test passed\n";
   }
 
-  calculator1.Parse();
-  calculator1.DisplayInFix();
-  calculator2.Parse();
-  calculator2.DisplayInFix();
-  calculator3.Parse();
-  calculator3.DisplayInFix();
-  calculator4.Parse();
-  calculator4.DisplayInFix();
-  calculator5.Parse();
-  calculator5.DisplayInFix();
-  calculator6.Parse();
-  calculator6.DisplayInFix();
+  C->Parse();
+  C->DisplayInFix();
 
   return 0;
 }
