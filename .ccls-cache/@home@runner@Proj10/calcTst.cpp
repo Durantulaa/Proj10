@@ -4,10 +4,10 @@
 using namespace std;
 int main(int argc, char *argv[]) {
 
-  if (argc != 2) {
-    cout << "Invalid input. Please try again." << endl;
-    return 1;
-  }
+  // if (argc != 2) {
+  //   cout << "Invalid input. Please try again." << endl;
+  //   return 1;
+  // }
 
   Calc *C = new Calc(argv[1]);
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     cout << "CheckParens test passed\n";
   }
 
-  C->Parse();
+  //C->Parse();
   C->DisplayInFix();
 
   return 0;
